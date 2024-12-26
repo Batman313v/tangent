@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ./tangent-ui
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - OLLAMA_HOST=http://localhost:11434
+      - BACKEND_URL=http://localhost:5001
+
+  backend:
+    build:
+      context: ./tangent-api
+      dockerfile: docker/Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - OLLAMA_HOST=http://localhost:11434
+    # - EMBEDDING_MODEL=nordic
+    # - GENERATION_MODEL=llama3.2
+    volumes:
+      - ./tangent-data:/app/processed_data
